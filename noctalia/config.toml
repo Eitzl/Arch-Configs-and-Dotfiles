@@ -21,6 +21,77 @@ address = "Santa Cruz, CA"
 [nightlight]
 enabled = true
 
+# Oxide design system. Only values that differ from Noctalia's defaults are
+# set below; see `noctalia config export full` for the rest.
+
+# §01: hand-picked palette (palettes/Oxide.json), dark only. Never
+# source = "wallpaper": every m3 scheme drags the accent back toward candy.
+[theme]
+source = "custom"
+custom_palette = "Oxide"
+mode = "dark"
+shell_mode = "follow"
+
 # One palette for everything: these templates regenerate app colors whenever it changes.
+# hyprland renders hypr/noctalia.lua (window border colors, §05).
 [theme.templates]
-builtin_ids = ["gtk3", "gtk4", "qt", "ghostty", "kitty", "starship"]
+builtin_ids = ["gtk3", "gtk4", "qt", "ghostty", "kitty", "starship", "hyprland"]
+
+# §05: the only custom template. Renders the lock screen's six color roles.
+[theme.templates.user.hyprlock]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/hyprlock-colors.conf"
+output_path = "$XDG_CONFIG_HOME/hypr/hyprlock-colors.conf"
+
+# §02 type, §03 shape, §04 motion, §10 materials.
+[shell]
+# Falls back to sans-serif until ttf-ibm-plex is installed.
+font_family = "IBM Plex Sans Condensed, sans-serif"
+corner_radius_scale = 0.15 # ≈3px on shell surfaces, matches window rounding
+
+[shell.animation]
+speed = 0.85
+
+[shell.shadow]
+alpha = 0.85 # depth from a hard dark edge, not a soft halo
+
+# §03: edge-to-edge instrument rail with one hairline underneath. No floating
+# pill, no concave corners, no capsules.
+[bar.default]
+thickness = 30
+padding = 10
+widget_spacing = 10
+radius = 0
+radius_top_left = 0
+radius_top_right = 0
+radius_bottom_left = 0
+radius_bottom_right = 0
+margin_ends = 0
+concave_edge_corners = false
+border = "outline"
+border_width = 1.0
+# brightness and battery removed: nothing to report on a desktop AIO.
+end = [
+    "media",
+    "tray",
+    "notifications",
+    "clipboard",
+    "network",
+    "bluetooth",
+    "volume",
+    "control-center",
+    "session",
+]
+
+[control_center]
+width = 660
+
+# Toasts tuck into the grid: offset matches gaps_out. Solid, not 0.97.
+[notification]
+offset_x = 6
+offset_y = 6
+background_opacity = 1.0
+
+# Out from under the bar.
+[osd]
+position = "bottom_center"
+background_opacity = 1.0

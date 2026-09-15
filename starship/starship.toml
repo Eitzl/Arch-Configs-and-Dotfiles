@@ -4,7 +4,70 @@ palette = "noctalia"
 add_newline = true
 
 # Noctalia's starship template inserts `palette = "noctalia"` and a marked
-# [palettes.noctalia] block below; the default modules pick up those colors.
+# [palettes.noctalia] block below; named colors resolve through it. Numbered
+# colors (8 = ANSI bright black) and bright-* come from the terminal palette.
+
+# Oxide §09: two lines, no powerline blocks. Segments are separated by a dim
+# word or middot and carry their own ANSI color: path cyan, branch mauve,
+# dirty amber, error signal red, language olive.
+format = """
+$username$hostname$directory$git_branch$git_status\
+$python$nodejs$cmd_duration$status
+$character"""
+
+[character]
+success_symbol = "[▸](bold red)"
+error_symbol = "[▸](bold bright-red)"
+
+# Only shown as root or over SSH.
+[username]
+style_user = "white"
+style_root = "bright-red"
+format = "[$user]($style)[ @ ](8)"
+
+[hostname]
+style = "blue"
+format = "[$hostname]($style) "
+
+[directory]
+style = "cyan"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+style = "magenta"
+format = "[on ](8)[$branch]($style) "
+
+[git_status]
+style = "yellow"
+modified = "!${count}"
+staged = "+${count}"
+untracked = "?${count}"
+deleted = "✘${count}"
+renamed = "»${count}"
+conflicted = "=${count}"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+format = '([\[$conflicted$modified( $staged)( $untracked)( $deleted)( $renamed)( $ahead_behind)\]]($style) )'
+
+[python]
+style = "green"
+version_format = "${major}.${minor}"
+format = '[via ](8)[py $version]($style)( [\(](8)[$virtualenv]($style)[\)](8)) '
+
+[nodejs]
+style = "green"
+format = "[via ](8)[node $version]($style) "
+
+[cmd_duration]
+style = "8"
+min_time = 1000
+format = "[· ](8)[$duration]($style) "
+
+[status]
+disabled = false
+style = "bright-red"
+format = "[· ](8)[✕$status]($style) "
 
 # >>> NOCTALIA STARSHIP PALETTE >>>
 # Noctalia Starship Palette
