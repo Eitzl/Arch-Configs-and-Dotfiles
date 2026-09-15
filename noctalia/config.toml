@@ -1,0 +1,26 @@
+# Hand-written layer. settings.toml (written by the Settings UI) loads after
+# this file and wins on conflicts.
+
+# hyprlock owns locking; hypridle owns idle timeouts.
+[lockscreen]
+enabled = false
+
+[idle.behavior.lock]
+enabled = false
+
+[idle.behavior.screen-off]
+enabled = false
+
+[idle.behavior.lock-and-suspend]
+enabled = false
+
+# Night light owned here, so hyprsunset is not installed (both use gamma control).
+[location]
+address = "Santa Cruz, CA"
+
+[nightlight]
+enabled = true
+
+# One palette for everything: these templates regenerate app colors whenever it changes.
+[theme.templates]
+builtin_ids = ["gtk3", "gtk4", "qt", "ghostty", "kitty", "starship"]
